@@ -1,6 +1,9 @@
 # rsocket-backpressure-example
 An example of backpressure between an [RSocket](http://rsocket.io) client and service.
 
+In this example the `count-client` requests a stream of integers from the `count-service` and specifies that it can only handle
+`10` requests at a time.
+
 ## Building the Example
 Run the following command to build the example:
 
