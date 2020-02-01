@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 import java.math.BigInteger;
 
 /**
- * Service that returns a stream of integers from 1 to 10,000 as fast as the consumer can handle them.
+ * RSocket service that returns a stream of integers from 1 to 10,000 as fast as the consumer can handle them.
  */
 public class CountService {
     private static final Logger LOG = LoggerFactory.getLogger(CountService.class);

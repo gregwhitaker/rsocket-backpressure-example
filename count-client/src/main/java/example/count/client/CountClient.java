@@ -11,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import java.math.BigInteger;
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * RSocket client that requests a stream of integers from the count service.
+ */
 public class CountClient {
     private static final Logger LOG = LoggerFactory.getLogger(CountClient.class);
 
@@ -23,7 +26,7 @@ public class CountClient {
         CountDownLatch latch = new CountDownLatch(1);
 
         rSocket.requestStream(DefaultPayload.create(Unpooled.EMPTY_BUFFER))
-                .limitRate(10)
+                .limitRate(10)  // limit the count service to emitting 10 values at a time
                 .doOnComplete(() -> {
                     LOG.info("Done");
                     latch.countDown();
