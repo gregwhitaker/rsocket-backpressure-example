@@ -1,0 +1,4 @@
+rootProject.name = 'rsocket-backpressure-example'
+include 'count-client'
+include 'count-service'
+

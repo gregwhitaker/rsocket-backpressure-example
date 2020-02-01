@@ -1,0 +1,14 @@
+allprojects {
+    apply plugin: "idea"
+
+    group = 'com.github.gregwhitaker'
+    version = '0.1.0'
+
+    ext {
+        rsocketVersion = '1.0.0-RC5'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+}
