@@ -1,4 +1,63 @@
 # rsocket-backpressure-example
+An example of backpressure between an [RSocket](http://rsocket.io) client and service.
+
+## Building the Example
+Run the following command to build the example:
+
+    ./gradlew clean build
+    
+## Running the Example
+Follow the steps below to run the example:
+
+1. Run the following command to start the `count-service`:
+
+        ./gradlew :count-service:run
+        
+    If the service has started successfully you will see the following in the terminal:
+    
+        > Task :count-service:run
+        [main] INFO example.count.service.CountService - RSocket server started on port: 7000
+        
+2. In a new terminal, run the following command to start streaming integers with the `count-client`:
+
+        ./gradlew :count-client:run
+        
+    If successful, you will see in the terminal that it processes `10,000` integers:
+
+        [reactor-tcp-nio-1] INFO example.count.client.CountClient - Received: 9995
+        [reactor-tcp-nio-1] INFO example.count.client.CountClient - Received: 9996
+        [reactor-tcp-nio-1] INFO example.count.client.CountClient - Received: 9997
+        [reactor-tcp-nio-1] INFO example.count.client.CountClient - Received: 9998
+        [reactor-tcp-nio-1] INFO example.count.client.CountClient - Received: 9999
+        [reactor-tcp-nio-1] INFO example.count.client.CountClient - Received: 10000
+        [reactor-tcp-nio-1] INFO example.count.client.CountClient - Done
+        
+    In the `count-service` terminal, notice that it is receiving requests for `8` numbers at a time:
+    
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9984
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9985
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9986
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Received Request For: 8
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9987
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9988
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9989
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9990
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9991
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9992
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9993
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9994
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Received Request For: 8
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9995
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9996
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9997
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9998
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 9999
+        [reactor-tcp-nio-2] INFO example.count.service.CountService - Sending: 10000
+        
+    The `8` items comes from the `limitRate(10)` on the client. The limitRate algorithm proactively fills the buffer when it is 75% exhausted. That is why you are seeing it request 8 instead of 10.
+
+## Bugs and Feedback
+For bugs, questions, and discussions please use the [Github Issues](https://github.com/gregwhitaker/rsocket-backpressure-example/issues).
 
 ## License
 MIT License
