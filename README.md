@@ -1,4 +1,6 @@
 # rsocket-backpressure-example
+![Build](https://github.com/gregwhitaker/rsocket-backpressure-example/workflows/Build/badge.svg)
+
 An example of backpressure between an [RSocket](http://rsocket.io) client and service.
 
 In this example the `count-client` requests a stream of integers from the `count-service` and specifies that it can only handle
